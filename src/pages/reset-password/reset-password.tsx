@@ -1,10 +1,14 @@
-import { resetPasswordApi } from '@api';
+import { resetPassword } from '@slices/userSlice';
 import { ResetPasswordUI } from '@ui-pages';
 import { type SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAppDispatch } from '@services/store';
+
 export const ResetPassword = (): React.JSX.Element => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [error, setError] = useState<Error | null>(null);
@@ -13,12 +17,25 @@ export const ResetPassword = (): React.JSX.Element => {
     e.preventDefault();
 
     setError(null);
-    void resetPasswordApi({ password, token })
+
+    void dispatch(
+      resetPassword({
+        password,
+        token,
+      })
+    )
+      .unwrap()
       .then(() => {
         localStorage.removeItem('resetPassword');
-        void navigate('/login');
+        void navigate('/login', { replace: true });
       })
-      .catch((err: Error) => setError(err));
+      .catch((requestError: unknown) => {
+        setError(
+          requestError instanceof Error
+            ? requestError
+            : new Error('Не удалось изменить пароль')
+        );
+      });
   };
 
   useEffect(() => {
