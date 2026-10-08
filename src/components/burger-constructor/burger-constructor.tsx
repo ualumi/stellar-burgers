@@ -49,9 +49,6 @@ export const BurgerConstructor = (): React.JSX.Element => {
     void dispatch(createOrder(ingredientIds)).then((action) => {
       if (createOrder.fulfilled.match(action)) {
         dispatch(clearConstructor());
-
-        void dispatch(getFeeds());
-        void dispatch(getUserOrders());
       }
     });
   };
