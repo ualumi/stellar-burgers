@@ -45,19 +45,33 @@ describe('ingredientsSlice reducer', () => {
   });
 
   test('handles getIngredients.pending', () => {
+    const initialState = {
+      items: mockIngredients,
+      isLoading: false,
+      error: {
+        message: 'Предыдущая ошибка',
+      },
+    };
+
     const state = ingredientsReducer(
-      undefined,
+      initialState,
       getIngredients.pending('request-id', undefined)
     );
 
-    expect(state.items).toEqual([]);
+    expect(state.items).toEqual(mockIngredients);
     expect(state.isLoading).toBe(true);
     expect(state.error).toBeNull();
   });
 
   test('handles getIngredients.fulfilled', () => {
+    const initialState = {
+      items: [],
+      isLoading: true,
+      error: null,
+    };
+
     const state = ingredientsReducer(
-      undefined,
+      initialState,
       getIngredients.fulfilled(mockIngredients, 'request-id', undefined)
     );
 
@@ -67,8 +81,14 @@ describe('ingredientsSlice reducer', () => {
   });
 
   test('handles getIngredients.rejected', () => {
+    const initialState = {
+      items: [],
+      isLoading: true,
+      error: null,
+    };
+
     const state = ingredientsReducer(
-      undefined,
+      initialState,
       getIngredients.rejected(
         new Error('Ошибка загрузки ингредиентов'),
         'request-id',
