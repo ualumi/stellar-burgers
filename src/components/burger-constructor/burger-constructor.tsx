@@ -1,5 +1,4 @@
 import { clearConstructor, selectBurgerConstructor } from '@slices/constructorSlice';
-import { getFeeds, getUserOrders } from '@slices/feedSlice';
 import {
   closeOrderModal,
   createOrder,

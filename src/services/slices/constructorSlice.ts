@@ -21,10 +21,7 @@ const constructorSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: {
-      reducer: (
-        state,
-        action: PayloadAction<TConstructorIngredient>,
-      ) => {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
         if (action.payload.type === 'bun') {
           state.bun = action.payload;
           return;
