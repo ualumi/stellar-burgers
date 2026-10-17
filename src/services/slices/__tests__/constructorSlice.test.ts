@@ -120,7 +120,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.ingredients).toEqual([constructorSauce]);
   });
 
-  test('does not move an ingredient when indexes are invalid', () => {
+  test('moves an ingredient inside the constructor', () => {
     const initialState: TConstructorState = {
       bun: null,
       ingredients: [constructorMain, constructorSauce],
@@ -129,12 +129,12 @@ describe('burgerConstructor reducer', () => {
     const state = constructorReducer(
       initialState,
       moveIngredient({
-        fromIndex: -1,
-        toIndex: 0,
+        fromIndex: 0,
+        toIndex: 1,
       })
     );
 
-    expect(state).toEqual(initialState);
+    expect(state.ingredients).toEqual([constructorSauce, constructorMain]);
   });
 
   test('does not move an ingredient when indexes are invalid', () => {
@@ -147,7 +147,7 @@ describe('burgerConstructor reducer', () => {
       initialState,
       moveIngredient({
         fromIndex: -1,
-        toIndex: 1,
+        toIndex: 0,
       })
     );
 
